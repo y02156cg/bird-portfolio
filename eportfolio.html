@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird Sound Classification E-Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-deep: #1B4332;
+            --forest-mid: #2D6A4F;
+            --forest-light: #40916C;
+            --amber: #E9C46A;
+            --amber-dark: #D4A84B;
+            --cream: #FAF3E0;
+            --cream-dark: #F0E6D0;
+            --charcoal: #2D3436;
+            --charcoal-light: #4A5568;
+            --white: #FFFFFF;
+            --shadow: rgba(27, 67, 50, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+            padding: 0.8rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--amber);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--amber);
+            color: var(--forest-deep);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 50%, var(--forest-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(233, 196, 106, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--amber);
+            color: var(--forest-deep);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--cream);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--amber);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--cream);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Team Section in Hero */
+        .team-section {
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .team-title {
+            color: var(--amber);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            color: var(--cream);
+            font-size: 0.95rem;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--amber);
+            color: var(--forest-deep);
+        }
+
+        .btn-primary:hover {
+            background: var(--amber-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(233, 196, 106, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--forest-deep);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: var(--cream-dark);
+            max-width: 100%;
+            padding: 6rem calc((100% - 1200px) / 2 + 2rem);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            display: inline-block;
+            background: var(--forest-deep);
+            color: var(--amber);
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--forest-deep);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--charcoal-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px var(--shadow);
+            border: 1px solid rgba(27, 67, 50, 0.05);
+        }
+
+        .content-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--forest-deep);
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            color: var(--charcoal-light);
+            margin-bottom: 1rem;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .callout-title {
+            color: var(--amber);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .callout-content {
+            color: var(--cream);
+        }
+
+        /* Issue Cards */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .issue-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            border-left: 4px solid var(--amber);
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .issue-number {
+            background: var(--amber);
+            color: var(--forest-deep);
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .issue-card h4 {
+            color: var(--forest-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .issue-card p {
+            color: var(--charcoal-light);
+            font-size: 0.95rem;
+        }
+
+        /* Solution Section */
+        .solution-box {
+            background: var(--cream-dark);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .solution-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .solution-icon {
+            background: var(--forest-light);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* User Cards */
+        .user-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .user-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--forest-deep), var(--amber));
+        }
+
+        .user-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--forest-deep);
+            margin-bottom: 1rem;
+        }
+
+        .user-card ul {
+            list-style: none;
+        }
+
+        .user-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--charcoal-light);
+        }
+
+        .user-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--forest-light);
+        }
+
+        /* Tables */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .styled-table thead {
+            background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+        }
+
+        .styled-table th {
+            color: var(--cream);
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .styled-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--cream-dark);
+            color: var(--charcoal);
+        }
+
+        .styled-table tbody tr:hover {
+            background: var(--cream);
+        }
+
+        .styled-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: rgba(233, 196, 106, 0.2) !important;
+            font-weight: 600;
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(64, 145, 108, 0.2);
+            color: var(--forest-mid);
+        }
+
+        /* Pipeline Section */
+        .pipeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 3rem 0;
+        }
+
+        .pipeline-step {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 5px 20px var(--shadow);
+            position: relative;
+        }
+
+        .pipeline-step::after {
+            content: '→';
+            position: absolute;
+            right: -1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--forest-light);
+            font-size: 1.5rem;
+        }
+
+        .pipeline-step:last-child::after {
+            display: none;
+        }
+
+        .pipeline-step .step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pipeline-step .step-label {
+            font-size: 0.8rem;
+            color: var(--charcoal-light);
+        }
+
+        .pipeline-step .step-name {
+            font-weight: 600;
+            color: var(--forest-deep);
+            font-size: 0.9rem;
+        }
+
+        /* Block Details */
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .block-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .block-icon {
+            background: var(--forest-deep);
+            color: var(--amber);
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .block-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--forest-deep);
+        }
+
+        .block-card ul {
+            list-style: none;
+        }
+
+        .block-card li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            color: var(--charcoal-light);
+            font-size: 0.95rem;
+        }
+
+        .block-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--amber);
+            font-size: 1.2rem;
+        }
+
+        /* Prototype Cards */
+        .prototype-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px var(--shadow);
+            position: relative;
+            border-left: 4px solid var(--forest-light);
+        }
+
+        .prototype-card.success {
+            border-left-color: var(--forest-mid);
+        }
+
+        .prototype-card.fail {
+            border-left-color: #e74c3c;
+        }
+
+        .prototype-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .prototype-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--forest-deep);
+        }
+
+        .prototype-result {
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .result-success {
+            background: rgba(64, 145, 108, 0.2);
+            color: var(--forest-mid);
+        }
+
+        .result-fail {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+        }
+
+        /* Testing Section */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .test-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .test-number {
+            background: var(--amber);
+            color: var(--forest-deep);
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .test-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--forest-deep);
+        }
+
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--forest-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 15px;
+            width: 30px;
+            height: 30px;
+            background: var(--amber);
+            border-radius: 50%;
+            border: 4px solid var(--cream);
+        }
+
+        .timeline-content {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .timeline-weeks {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--forest-mid);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--forest-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Visualization Cards */
+        .viz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .viz-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .viz-placeholder {
+            background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cream);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .viz-content {
+            padding: 1.5rem;
+        }
+
+        .viz-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--forest-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .viz-desc {
+            color: var(--charcoal-light);
+            font-size: 0.9rem;
+        }
+
+        /* Figure placeholder for images */
+        .figure-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 20px var(--shadow);
+            text-align: center;
+        }
+
+        .figure-placeholder {
+            background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 100%);
+            border: 2px dashed var(--forest-light);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 1rem;
+            color: var(--charcoal-light);
+        }
+
+        .figure-caption {
+            font-style: italic;
+            color: var(--charcoal-light);
+            font-size: 0.9rem;
+        }
+
+        /* Insights Grid */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .insight-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px var(--shadow);
+            text-align: center;
+        }
+
+        .insight-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--amber);
+            font-weight: 700;
+        }
+
+        .insight-text {
+            color: var(--charcoal-light);
+            margin-top: 1rem;
+        }
+
+        /* References Section */
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .reference-category {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .reference-category h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--forest-deep);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--amber);
+        }
+
+        .reference-list {
+            list-style: none;
+        }
+
+        .reference-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--cream-dark);
+            color: var(--charcoal-light);
+            font-size: 0.9rem;
+        }
+
+        .reference-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--cream);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--amber);
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--amber);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.5rem 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 5rem 1rem 3rem;
+            }
+
+            section {
+                padding: 4rem 1rem;
+            }
+
+            .pipeline-step::after {
+                display: none;
+            }
+
+            .references-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">🐦 <span>Bird</span>Sound</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#problem">Problem</a>
+                <a href="#users">Users</a>
+                <a href="#criteria">Criteria</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#models">Models</a>
+                <a href="#prototype">Prototype</a>
+                <a href="#testing">Testing</a>
+                <a href="#timeline">Timeline</a>
+                <a href="#results">Results</a>
+                <a href="#reflections">Reflections</a>
+                <a href="#references">References</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Home) -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-badge">🔬 Research Project • BirdCLEF-2023</span>
+            <h1>Automated Bird Sound Identification System</h1>
+            <p class="hero-subtitle">
+                Welcome to our e-portfolio showcasing the development of an open-world bird sound classification system. 
+                This project addresses a critical challenge in biodiversity monitoring: identifying known bird species 
+                while detecting potentially unknown species from acoustic field data.
+            </p>
+            
+            <div class="quick-links">
+                <a href="https://github.com/charleschile/bird-sound-denoising" class="btn btn-primary" target="_blank">
+                    📂 GitHub Repository
+                </a>
+                <a href="#results" class="btn btn-secondary">
+                    🎬 View Results
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-value">77%</div>
+                    <div class="stat-label">Validation Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">264</div>
+                    <div class="stat-label">Species Classified</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">~1s</div>
+                    <div class="stat-label">Processing Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">36MB</div>
+                    <div class="stat-label">Model Size</div>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <div class="team-title">Our Team</div>
+                <div class="team-members">
+                    <span class="team-member">Trevor Zhang</span>
+                    <span class="team-member">Shuyi Jin</span>
+                    <span class="team-member">Chi Le</span>
+                    <span class="team-member">Shuyang Zhang</span>
+                    <span class="team-member">Chen Gong</span>
+                    <span class="team-member">Jiang Li</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section id="problem">
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2 class="section-title">The Challenge We're Solving</h2>
+            <p class="section-subtitle">Understanding the limitations of current bird sound identification systems</p>
+        </div>
+
+        <div class="content-card">
+            <h3>The Problem</h3>
+            <p>
+                Automated bird sound identification systems play a crucial role in biodiversity monitoring by enabling 
+                large-scale analysis of acoustic field data. However, existing models operate under a <strong>closed-world 
+                assumption</strong>—they only recognize species in their training sets and often misclassify unfamiliar 
+                calls as known species with high confidence.
+            </p>
+            <p>
+                To overcome this limitation, we propose developing a classification system capable of both accurately 
+                identifying known bird species and detecting out-of-distribution sounds that may correspond to rare or 
+                previously unrecorded species—addressing the critical <em>"What if they are new?"</em> challenge.
+            </p>
+        </div>
+
+        <h3 style="text-align: center; margin: 3rem 0 2rem; font-family: 'Playfair Display', serif; color: var(--forest-deep);">
+            Why This Matters
+        </h3>
+
+        <div class="issues-grid">
+            <div class="issue-card">
+                <div class="issue-number">1</div>
+                <h4>Silent Misclassification</h4>
+                <p>Unknown species are labeled as known with false confidence, leading to inaccurate biodiversity assessments and potentially missed discoveries.</p>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number">2</div>
+                <h4>Discovery Barriers</h4>
+                <p>Rare or new species go undetected in monitoring data, hindering conservation efforts and scientific discovery of potentially endangered species.</p>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number">3</div>
+                <h4>Poor Transferability</h4>
+                <p>Models trained on specific regions fail when deployed in different geographic areas with different species compositions.</p>
+            </div>
+        </div>
+
+        <div class="solution-box">
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--forest-deep); margin-bottom: 1.5rem;">Our Solution</h3>
+            <p style="margin-bottom: 1.5rem;">We propose developing a classification system capable of:</p>
+            <div class="solution-item">
+                <span class="solution-icon">✓</span>
+                <span>Accurately identifying known bird species from acoustic recordings</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-icon">✓</span>
+                <span>Detecting out-of-distribution sounds that may correspond to rare or previously unrecorded species</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-icon">✓</span>
+                <span>Providing calibrated uncertainty estimates for expert review</span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Target Users -->
+    <section id="users" class="section-alt">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2 class="section-title">Who Benefits From This System</h2>
+            <p class="section-subtitle">Our target users and stakeholders</p>
+        </div>
+
+        <div class="user-cards">
+            <div class="user-card">
+                <h4>🔬 Ecologists & Ornithologists</h4>
+                <ul>
+                    <li>Automatically classify large datasets of bird vocalizations from field sensors</li>
+                    <li>Identify known species efficiently</li>
+                    <li>Flag potential unknown or rare species for further study</li>
+                </ul>
+            </div>
+            <div class="user-card">
+                <h4>🌍 Biodiversity Monitoring Agencies</h4>
+                <ul>
+                    <li>Integrate into long-term monitoring programs</li>
+                    <li>Improve species detection accuracy</li>
+                    <li>Track population changes more reliably</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; margin: 3rem 0 2rem; font-family: 'Playfair Display', serif; color: var(--forest-deep);">
+            Secondary Stakeholders
+        </h3>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Stakeholder</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Conservation Teams</td>
+                    <td>Prioritize habitat protection for rare species based on system alerts</td>
+                </tr>
+                <tr>
+                    <td>Citizen Scientists</td>
+                    <td>Contribute acoustic data, increase geographic coverage</td>
+                </tr>
+                <tr>
+                    <td>Policy Makers</td>
+                    <td>Inform habitat management and biodiversity protection policies</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <div class="callout-title">🤝 Integration with Other Systems</div>
+            <div class="callout-content">
+                <ul style="list-style: none;">
+                    <li style="padding: 0.3rem 0;">• <strong>Forest Flying & Mother Drone teams</strong> → Analyze drone-collected audio</li>
+                    <li style="padding: 0.3rem 0;">• <strong>Bug Attractor & Dung Drone teams</strong> → Filter bird sounds from background noise</li>
+                    <li style="padding: 0.3rem 0;">• <strong>ID Birds & Bird Sound to Report teams</strong> → Enhance identification accuracy</li>
+                    <li style="padding: 0.3rem 0;">• <strong>Smart Pollinator</strong> → Differentiate bird calls from pollinator sounds</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Criteria -->
+    <section id="criteria">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2 class="section-title">Design Objectives & Constraints</h2>
+            <p class="section-subtitle">The targets we set and achieved</p>
+        </div>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Criterion</th>
+                    <th>Type</th>
+                    <th>Target</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Classification Accuracy</td>
+                    <td>Objective</td>
+                    <td>≥75% on validation</td>
+                    <td><span class="badge badge-success">✅ 77% with EfficientNet-B2</span></td>
+                </tr>
+                <tr>
+                    <td>Processing Time</td>
+                    <td>Constraint</td>
+                    <td>≤2s per 10s clip</td>
+                    <td><span class="badge badge-success">✅ ~1s GPU inference</span></td>
+                </tr>
+                <tr>
+                    <td>Model Size</td>
+                    <td>Constraint</td>
+                    <td>≤100 MB</td>
+                    <td><span class="badge badge-success">✅ ~36 MB</span></td>
+                </tr>
+                <tr>
+                    <td>Noise Robustness</td>
+                    <td>Objective</td>
+                    <td>≥70% under noise</td>
+                    <td><span class="badge badge-success">✅ Band-pass + noise reduction</span></td>
+                </tr>
+                <tr>
+                    <td>Energy Efficiency</td>
+                    <td>Constraint</td>
+                    <td>≤10W inference</td>
+                    <td><span class="badge badge-success">✅ Suitable for edge devices</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="content-card">
+            <h3>How We Developed These Criteria</h3>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--amber);">📚</span>
+                    Literature review of existing bird sound classification research (BirdNET, BirdCLEF benchmarks)
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--amber);">💬</span>
+                    Stakeholder interviews with ecologists and drone operation teams
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--amber);">📊</span>
+                    Analysis of real-world biodiversity monitoring requirements and field constraints
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- System Architecture -->
+    <section id="architecture" class="section-alt">
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2 class="section-title">Technical Design & Pipeline</h2>
+            <p class="section-subtitle">How our system processes bird audio</p>
+        </div>
+
+        <div class="pipeline">
+            <div class="pipeline-step">
+                <div class="step-icon">🎵</div>
+                <div class="step-name">Raw Audio</div>
+                <div class="step-label">Input</div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-icon">🔧</div>
+                <div class="step-name">Block A</div>
+                <div class="step-label">Preprocessing</div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-icon">📊</div>
+                <div class="step-name">Block B</div>
+                <div class="step-label">Mel-Spec</div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-icon">📁</div>
+                <div class="step-name">Block C</div>
+                <div class="step-label">Dataset</div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-icon">🧠</div>
+                <div class="step-name">Block D</div>
+                <div class="step-label">Model</div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-icon">✅</div>
+                <div class="step-name">Block E</div>
+                <div class="step-label">Evaluation</div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-icon">🐦</div>
+                <div class="step-name">Output</div>
+                <div class="step-label">Predictions</div>
+            </div>
+        </div>
+
+        <!-- System Architecture Diagram -->
+        <div class="figure-container">
+            <img src="blockflow.png" alt="System Architecture - Data flow through preprocessing, feature extraction, and classification blocks" style="max-width: 100%; border-radius: 12px;">
+            <p class="figure-caption">Figure 1: Complete system architecture showing data flow through all blocks</p>
+        </div>
+
+        <div class="blocks-grid">
+            <div class="block-card">
+                <div class="block-header">
+                    <div class="block-icon">A</div>
+                    <h4 class="block-title">Audio Preprocessing</h4>
+                </div>
+                <ul>
+                    <li>Sample rate: 32 kHz</li>
+                    <li>Band-pass filter: 1,000–12,000 Hz</li>
+                    <li>Optional spectral-gating noise reduction</li>
+                    <li>Fixed 10-second windows</li>
+                </ul>
+            </div>
+            <div class="block-card">
+                <div class="block-header">
+                    <div class="block-icon">B</div>
+                    <h4 class="block-title">Mel Spectrogram Features</h4>
+                </div>
+                <ul>
+                    <li>256 mel frequency bins</li>
+                    <li>Frequency range: 80–15,000 Hz</li>
+                    <li>Log compression applied</li>
+                    <li>Per-sample normalization</li>
+                </ul>
+            </div>
+            <div class="block-card">
+                <div class="block-header">
+                    <div class="block-icon">C</div>
+                    <h4 class="block-title">Dataset Management</h4>
+                </div>
+                <ul>
+                    <li>14,620 high-quality samples</li>
+                    <li>264 bird species</li>
+                    <li>Stratified 80/20 train/validation split</li>
+                    <li>Batch size: 24</li>
+                </ul>
+            </div>
+            <div class="block-card">
+                <div class="block-header">
+                    <div class="block-icon">D</div>
+                    <h4 class="block-title">EfficientNet-B2 Model</h4>
+                </div>
+                <ul>
+                    <li>ImageNet pretrained weights</li>
+                    <li>1→3 channel replication for spectrogram input</li>
+                    <li>264-class linear classifier head</li>
+                </ul>
+            </div>
+            <div class="block-card">
+                <div class="block-header">
+                    <div class="block-icon">E</div>
+                    <h4 class="block-title">Training Configuration</h4>
+                </div>
+                <ul>
+                    <li>Optimizer: Adam (lr = 3×10⁻⁴)</li>
+                    <li>Loss: BCEWithLogitsLoss</li>
+                    <li>Schedule: Cosine annealing</li>
+                    <li>Epochs: 15</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Selection -->
+    <section id="models">
+        <div class="section-header">
+            <span class="section-number">05</span>
+            <h2 class="section-title">Choosing the Best Approach</h2>
+            <p class="section-subtitle">Model selection through systematic evaluation</p>
+        </div>
+
+        <div class="content-card">
+            <h3>Candidate Solutions Evaluated</h3>
+            <ol style="margin: 1rem 0; padding-left: 1.5rem; color: var(--charcoal-light);">
+                <li style="padding: 0.3rem 0;">Baseline CNN (3-layer ConvNet)</li>
+                <li style="padding: 0.3rem 0;">EfficientNet-B0 (no preprocessing)</li>
+                <li style="padding: 0.3rem 0;"><strong style="color: var(--forest-mid);">⭐ EfficientNet-B0 + Band-pass + Noise Reduction (SELECTED)</strong></li>
+                <li style="padding: 0.3rem 0;">CRNN (CNN + BiLSTM)</li>
+                <li style="padding: 0.3rem 0;">PANNs CNN14</li>
+                <li style="padding: 0.3rem 0;">Lightweight Audio Transformer</li>
+                <li style="padding: 0.3rem 0;">Ensemble (EfficientNet + PANNs)</li>
+            </ol>
+        </div>
+
+        <h3 style="text-align: center; margin: 3rem 0 2rem; font-family: 'Playfair Display', serif; color: var(--forest-deep);">
+            Pugh Matrix Results
+        </h3>
+
+        <div style="overflow-x: auto;">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>Performance</th>
+                        <th>Robustness</th>
+                        <th>Compute</th>
+                        <th>Complexity</th>
+                        <th>Reproducibility</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>C1 Baseline</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>C2 EffNet-B0</td>
+                        <td>+1</td>
+                        <td>0</td>
+                        <td>-1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>C3 EffNet+BP+NR ⭐</strong></td>
+                        <td><strong>+1</strong></td>
+                        <td><strong>+1</strong></td>
+                        <td><strong>0</strong></td>
+                        <td><strong>0</strong></td>
+                        <td><strong>0</strong></td>
+                        <td><strong>+2</strong></td>
+                    </tr>
+                    <tr>
+                        <td>C4 CRNN</td>
+                        <td>+1</td>
+                        <td>0</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-2</td>
+                    </tr>
+                    <tr>
+                        <td>C5 PANNs</td>
+                        <td>+1</td>
+                        <td>+1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                    </tr>
+                    <tr>
+                        <td>C6 Transformer</td>
+                        <td>+1</td>
+                        <td>0</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-2</td>
+                    </tr>
+                    <tr>
+                        <td>C7 Ensemble</td>
+                        <td>+1</td>
+                        <td>+1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                        <td>-1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-card" style="margin-top: 2rem;">
+            <h3>Why We Chose Candidate 3</h3>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">✓</span>
+                    Clear performance and robustness advantage (+2 total score)
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">✓</span>
+                    Incorporates our unique contribution (preprocessing pipeline)
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">✓</span>
+                    Moderate implementation complexity
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">✓</span>
+                    Computationally feasible on Kaggle GPUs (Tesla T4)
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">✓</span>
+                    Easy to explain: "noisy waveform → cleaned waveform → log-mel → EfficientNet → predicted species"
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Prototype Evolution -->
+    <section id="prototype" class="section-alt">
+        <div class="section-header">
+            <span class="section-number">06</span>
+            <h2 class="section-title">From Baseline to Final System</h2>
+            <p class="section-subtitle">Our iterative development journey</p>
+        </div>
+
+        <div class="prototype-card fail">
+            <div class="prototype-header">
+                <span class="prototype-name">Prototype A: Minimal Baseline</span>
+                <span class="prototype-result result-fail">&lt;10% accuracy ❌</span>
+            </div>
+            <ul style="list-style: none; color: var(--charcoal-light);">
+                <li style="padding: 0.3rem 0;">• 2,000 samples, 5-second window, 128 mel bins</li>
+                <li style="padding: 0.3rem 0;">• EfficientNet-B0, no preprocessing</li>
+                <li style="padding: 0.3rem 0;"><strong>Lesson:</strong> Short windows miss complete vocalizations</li>
+            </ul>
+        </div>
+
+        <div class="prototype-card fail">
+            <div class="prototype-header">
+                <span class="prototype-name">Prototype B: Intermediate System</span>
+                <span class="prototype-result result-fail">~7% accuracy ❌</span>
+            </div>
+            <ul style="list-style: none; color: var(--charcoal-light);">
+                <li style="padding: 0.3rem 0;">• 4,000 samples, 5-second window, 256 mel bins</li>
+                <li style="padding: 0.3rem 0;">• EfficientNet-B2, better normalization</li>
+                <li style="padding: 0.3rem 0;"><strong>Lesson:</strong> Need full dataset and band-pass filtering</li>
+            </ul>
+        </div>
+
+        <div class="prototype-card success">
+            <div class="prototype-header">
+                <span class="prototype-name">Final System: Production Ready</span>
+                <span class="prototype-result result-success">77% accuracy ✅</span>
+            </div>
+            <ul style="list-style: none; color: var(--charcoal-light);">
+                <li style="padding: 0.3rem 0;">• 14,620 samples, 10-second window, 256 mel bins</li>
+                <li style="padding: 0.3rem 0;">• EfficientNet-B2 + band-pass + noise reduction</li>
+                <li style="padding: 0.3rem 0;">• Confidence scores consistently >0.97 for correct predictions</li>
+            </ul>
+        </div>
+
+        <h3 style="text-align: center; margin: 3rem 0 2rem; font-family: 'Playfair Display', serif; color: var(--forest-deep);">
+            Key Insights from Prototyping
+        </h3>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Longer Context (10s)</td>
+                    <td>Captures complete bird calls and vocalizations</td>
+                </tr>
+                <tr>
+                    <td>More Data (14K+)</td>
+                    <td>Better generalization across species</td>
+                </tr>
+                <tr>
+                    <td>Preprocessing</td>
+                    <td>Critical for noise robustness in field conditions</td>
+                </tr>
+                <tr>
+                    <td>Model Capacity</td>
+                    <td>264 classes need EfficientNet-B2 capacity</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Training Curves -->
+        <div class="figure-container">
+            <img src="TrainingValidationLoss.png" alt="Training and Validation Loss curves over 15 epochs" style="max-width: 100%; border-radius: 12px;">
+            <p class="figure-caption">Figure 2: Training curves showing loss improvement over 15 epochs</p>
+        </div>
+    </section>
+
+    <!-- Testing Plan -->
+    <section id="testing">
+        <div class="section-header">
+            <span class="section-number">07</span>
+            <h2 class="section-title">Validation & Quality Assurance</h2>
+            <p class="section-subtitle">Our comprehensive testing framework</p>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-number">1</div>
+                    <h4 class="test-title">Preprocessing Pipeline</h4>
+                </div>
+                <ul style="list-style: none; color: var(--charcoal-light); font-size: 0.95rem;">
+                    <li style="padding: 0.3rem 0;">• Band-pass filter validation with synthetic signals</li>
+                    <li style="padding: 0.3rem 0;">• SNR improvement measurement (target: ≥3dB)</li>
+                    <li style="padding: 0.3rem 0;">• Mel spectrogram dimension verification</li>
+                    <li style="padding: 0.3rem 0;">• 30 trials (10 synthetic + 20 real audio)</li>
+                </ul>
+            </div>
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-number">2</div>
+                    <h4 class="test-title">Dataset Integrity</h4>
+                </div>
+                <ul style="list-style: none; color: var(--charcoal-light); font-size: 0.95rem;">
+                    <li style="padding: 0.3rem 0;">• Label encoding correctness (264 classes)</li>
+                    <li style="padding: 0.3rem 0;">• File loading success rate (≥99%)</li>
+                    <li style="padding: 0.3rem 0;">• Augmentation behavior validation</li>
+                </ul>
+            </div>
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-number">3</div>
+                    <h4 class="test-title">Model Training</h4>
+                </div>
+                <ul style="list-style: none; color: var(--charcoal-light); font-size: 0.95rem;">
+                    <li style="padding: 0.3rem 0;">• Forward/backward pass stability</li>
+                    <li style="padding: 0.3rem 0;">• Gradient flow monitoring (no NaN/Inf)</li>
+                    <li style="padding: 0.3rem 0;">• Loss convergence over 15 epochs</li>
+                    <li style="padding: 0.3rem 0;">• 5 repeated runs for seed stability</li>
+                </ul>
+            </div>
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-number">4</div>
+                    <h4 class="test-title">Classification Performance</h4>
+                </div>
+                <ul style="list-style: none; color: var(--charcoal-light); font-size: 0.95rem;">
+                    <li style="padding: 0.3rem 0;">• Top-1 accuracy on validation set (target: ≥80%)</li>
+                    <li style="padding: 0.3rem 0;">• Confidence score distributions</li>
+                    <li style="padding: 0.3rem 0;">• 3 repeated evaluations</li>
+                </ul>
+            </div>
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-number">5</div>
+                    <h4 class="test-title">Inference System</h4>
+                </div>
+                <ul style="list-style: none; color: var(--charcoal-light); font-size: 0.95rem;">
+                    <li style="padding: 0.3rem 0;">• End-to-end latency (target: &lt;500ms per window)</li>
+                    <li style="padding: 0.3rem 0;">• GPU memory stability</li>
+                    <li style="padding: 0.3rem 0;">• Sliding window consistency</li>
+                    <li style="padding: 0.3rem 0;">• 50 window trials + 5 long-audio trials</li>
+                </ul>
+            </div>
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-number">6</div>
+                    <h4 class="test-title">Robustness</h4>
+                </div>
+                <ul style="list-style: none; color: var(--charcoal-light); font-size: 0.95rem;">
+                    <li style="padding: 0.3rem 0;">• Performance under varying SNR (0-20 dB)</li>
+                    <li style="padding: 0.3rem 0;">• Edge cases: silent clips, short clips</li>
+                    <li style="padding: 0.3rem 0;">• 40 trials across conditions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" class="section-alt">
+        <div class="section-header">
+            <span class="section-number">08</span>
+            <h2 class="section-title">Development Schedule</h2>
+            <p class="section-subtitle">September 2 – November 25, 2025 (12 weeks)</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-weeks">Weeks 1-2</div>
+                    <h4 class="timeline-title">Research & Planning</h4>
+                    <p style="color: var(--charcoal-light); font-size: 0.95rem;">Literature review, architecture evaluation, need-to-know research</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-weeks">Weeks 3-4</div>
+                    <h4 class="timeline-title">Data Preparation</h4>
+                    <p style="color: var(--charcoal-light); font-size: 0.95rem;">BirdCLEF dataset collection, preprocessing pipeline development</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-weeks">Weeks 5-8</div>
+                    <h4 class="timeline-title">Model Development</h4>
+                    <p style="color: var(--charcoal-light); font-size: 0.95rem;">Denoising and classification model training, prototype iterations</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-weeks">Weeks 9-10</div>
+                    <h4 class="timeline-title">Integration & Testing</h4>
+                    <p style="color: var(--charcoal-light); font-size: 0.95rem;">System integration, comprehensive testing across all blocks</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-weeks">Weeks 11-12</div>
+                    <h4 class="timeline-title">Documentation</h4>
+                    <p style="color: var(--charcoal-light); font-size: 0.95rem;">Final reporting, demo preparation, e-portfolio</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>Tech Stack</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div style="background: var(--cream); padding: 1rem; border-radius: 8px;">
+                    <strong style="color: var(--forest-deep);">Language</strong><br>
+                    <span style="color: var(--charcoal-light);">Python 3.8+</span>
+                </div>
+                <div style="background: var(--cream); padding: 1rem; border-radius: 8px;">
+                    <strong style="color: var(--forest-deep);">Framework</strong><br>
+                    <span style="color: var(--charcoal-light);">PyTorch</span>
+                </div>
+                <div style="background: var(--cream); padding: 1rem; border-radius: 8px;">
+                    <strong style="color: var(--forest-deep);">Audio Processing</strong><br>
+                    <span style="color: var(--charcoal-light);">librosa, scipy, noisereduce</span>
+                </div>
+                <div style="background: var(--cream); padding: 1rem; border-radius: 8px;">
+                    <strong style="color: var(--forest-deep);">Model Library</strong><br>
+                    <span style="color: var(--charcoal-light);">timm (EfficientNet)</span>
+                </div>
+                <div style="background: var(--cream); padding: 1rem; border-radius: 8px;">
+                    <strong style="color: var(--forest-deep);">Hardware</strong><br>
+                    <span style="color: var(--charcoal-light);">Kaggle Tesla T4 GPU</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualizations & Results -->
+    <section id="results">
+        <div class="section-header">
+            <span class="section-number">09</span>
+            <h2 class="section-title">Data Analysis & Outputs</h2>
+            <p class="section-subtitle">Visualizations and demonstration of results</p>
+        </div>
+
+        <div class="viz-grid">
+            <div class="viz-card">
+                <img src="MelSpectrogram.png" alt="Mel Spectrogram visualization" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px 12px 0 0;">
+                <div class="viz-content">
+                    <h4 class="viz-title">Mel Spectrograms</h4>
+                    <p class="viz-desc">Audio frequency representation showing bird vocalization patterns</p>
+                </div>
+            </div>
+            <div class="viz-card">
+                <img src="TrainingValidationLoss.png" alt="Training and Validation Loss" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px 12px 0 0;">
+                <div class="viz-content">
+                    <h4 class="viz-title">Training Progress</h4>
+                    <p class="viz-desc">Training loss vs. validation loss over 15 epochs</p>
+                </div>
+            </div>
+            <div class="viz-card">
+                <img src="WindowLevelProbability.png" alt="Window-level Probability Predictions" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px 12px 0 0;">
+                <div class="viz-content">
+                    <h4 class="viz-title">Window-level Predictions</h4>
+                    <p class="viz-desc">Probability distributions over time for sliding window inference</p>
+                </div>
+            </div>
+            <div class="viz-card">
+                <div class="viz-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    🎬 Demo Video<br>
+                    <a href="YOUR_VIDEO_LINK_HERE" target="_blank" style="margin-top: 1rem; background: var(--amber); color: var(--forest-deep); padding: 0.5rem 1.5rem; border-radius: 20px; text-decoration: none; font-weight: 600;">Watch Demo →</a>
+                </div>
+                <div class="viz-content">
+                    <h4 class="viz-title">System Demo</h4>
+                    <p class="viz-desc">Video demonstration of the bird sound classification system</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; margin: 3rem 0 2rem; font-family: 'Playfair Display', serif; color: var(--forest-deep);">
+            Sample Prediction Results
+        </h3>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Sample</th>
+                    <th>True Label</th>
+                    <th>Predicted Label</th>
+                    <th>Confidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>sample_001.ogg</td>
+                    <td>American Robin</td>
+                    <td>American Robin</td>
+                    <td><span class="badge badge-success">0.98</span></td>
+                </tr>
+                <tr>
+                    <td>sample_002.ogg</td>
+                    <td>Northern Cardinal</td>
+                    <td>Northern Cardinal</td>
+                    <td><span class="badge badge-success">0.97</span></td>
+                </tr>
+                <tr>
+                    <td>sample_003.ogg</td>
+                    <td>House Sparrow</td>
+                    <td>House Sparrow</td>
+                    <td><span class="badge badge-success">0.95</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Reflections -->
+    <section id="reflections" class="section-alt">
+        <div class="section-header">
+            <span class="section-number">10</span>
+            <h2 class="section-title">Lessons Learned & Next Steps</h2>
+            <p class="section-subtitle">Reflections on our development journey</p>
+        </div>
+
+        <h3 style="text-align: center; margin: 0 0 2rem; font-family: 'Playfair Display', serif; color: var(--forest-deep);">
+            Key Insights
+        </h3>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="insight-number">01</div>
+                <p class="insight-text">Signal-level preprocessing is critical—often rivaling model choice in impact on final performance</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-number">02</div>
+                <p class="insight-text">Loosely coupled pipeline enables parallel team development and easier debugging</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-number">03</div>
+                <p class="insight-text">Balance between model complexity and computational constraints is essential for real-world deployment</p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>Limitations</h3>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: #e74c3c;">⚠</span>
+                    Validation set may not fully represent wild audio diversity
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: #e74c3c;">⚠</span>
+                    Some robustness tests (e.g., &lt;0 dB SNR) not feasible in project scope
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: #e74c3c;">⚠</span>
+                    Streaming deployment may introduce additional latency not captured in tests
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Future Directions</h3>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">→</span>
+                    Implement uncertainty quantification for OOD detection
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">→</span>
+                    Explore confidence thresholding to flag unknown species
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">→</span>
+                    Optimize for edge deployment on drones
+                </li>
+                <li style="padding: 0.5rem 0; padding-left: 2rem; position: relative; color: var(--charcoal-light);">
+                    <span style="position: absolute; left: 0; color: var(--forest-light);">→</span>
+                    Expand to more geographic regions with diverse species
+                </li>
+            </ul>
+        </div>
+
+        <div class="callout" style="margin-top: 2rem;">
+            <div class="callout-title">💭 Team Reflections</div>
+            <div class="callout-content">
+                <p style="font-style: italic; margin-bottom: 1rem;">
+                    "This project taught us the importance of systematic experimentation and the value of a modular pipeline design. 
+                    Each team member contributed unique expertise, from audio signal processing to deep learning optimization."
+                </p>
+                <p style="opacity: 0.8; font-size: 0.9rem;">— Team Bird Sound Classification</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- References -->
+    <section id="references">
+        <div class="section-header">
+            <span class="section-number">11</span>
+            <h2 class="section-title">Research & Resources</h2>
+            <p class="section-subtitle">Academic references and background research</p>
+        </div>
+
+        <div class="references-grid">
+            <div class="reference-category">
+                <h4>🔬 Existing Solutions</h4>
+                <ol class="reference-list">
+                    <li>Kahl et al. (2021) - BirdNET: CNN-based bird sound classifier</li>
+                    <li>Lostanlen et al. (2019) - Per-channel energy normalization</li>
+                    <li>Stowell et al. (2019) - BirdCLEF challenge overview</li>
+                    <li>Kumagai et al. (2022) - Open-set recognition for wildlife sounds</li>
+                    <li>Vaz et al. (2021) - EfficientNet for bioacoustic detection</li>
+                    <li>Stowell & Plumbley (2014) - Unsupervised feature learning for birds</li>
+                    <li>Wang et al. (2021) - Confidence-based OOD detection</li>
+                    <li>Goëau et al. (2023) - BirdCLEF 2023 overview</li>
+                </ol>
+            </div>
+            <div class="reference-category">
+                <h4>📋 Background & Governance</h4>
+                <ol class="reference-list">
+                    <li>CBD Post-2020 Global Biodiversity Framework (2022)</li>
+                    <li>GBIF Data Standards and Open Access Policy (2023)</li>
+                    <li>Cardinale et al. (2012) - Biodiversity loss and its impact</li>
+                    <li>Willis (2022) - Environmental acoustic monitoring policy</li>
+                    <li>Gasc et al. (2013) - Acoustic diversity index</li>
+                    <li>O'Brien (2022) - Conservation technology economics</li>
+                    <li>IUCN Conservation Monitoring Guidelines (2021)</li>
+                    <li>Steinberg et al. (2023) - AI for biodiversity ethics</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="content-card" style="margin-top: 2rem; text-align: center;">
+            <h3>Project Resources</h3>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+                <a href="https://github.com/charleschile/bird-sound-denoising" class="btn btn-primary" target="_blank">
+                    📂 GitHub Repository
+                </a>
+                <a href="https://docs.google.com/document/d/1ZbtGpjIORyNDwsl6w87k-hpm9gjF5BQfRxdqrOpMY4o/edit?usp=sharing" class="btn btn-secondary" style="border-color: var(--forest-deep); color: var(--forest-deep);" target="_blank">
+                    📄 Full Report (PDF)
+                </a>
+                <a href="YOUR_VIDEO_LINK_HERE" class="btn btn-secondary" style="border-color: var(--forest-deep); color: var(--forest-deep);" target="_blank">
+                    🎬 Demo Video
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🐦 Bird Sound Classification</div>
+            <p class="footer-text">
+                An open-world bird sound classification system for biodiversity monitoring.<br>
+                Developed as part of academic research • 2025
+            </p>
+            <div class="footer-links">
+                <a href="https://github.com/charleschile/bird-sound-denoising" target="_blank">GitHub</a>
+                <a href="#home">Back to Top</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7; font-size: 0.85rem;">
+                Team: Trevor Zhang • Shuyi Jin • Chi Le • Shuyang Zhang • Chen Gong • Jiang Li
+            </p>
+        </div>
+    </footer>
+
+    <!-- Smooth scroll and active nav highlighting -->
+    <script>
+        // Highlight active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = 'rgba(233, 196, 106, 0.3)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
